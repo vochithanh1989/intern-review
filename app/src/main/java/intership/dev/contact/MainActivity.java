@@ -16,9 +16,8 @@ import intership.dev.contact.Model.Contact;
 
 
 public class MainActivity extends Activity {
-
-    ArrayList<Contact> mList = new ArrayList<Contact>();
-    ListView list;
+    ArrayList<Contact> mArrayListContacts = new ArrayList<Contact>();
+    ListView mListViewContact;
     String[] name = new String[]{
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
             "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
@@ -27,7 +26,7 @@ public class MainActivity extends Activity {
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano"
     };
 
-    int[] avata = new int[]{
+    int[] avarta = new int[]{
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
@@ -42,19 +41,20 @@ public class MainActivity extends Activity {
 
         getDataPeople();
         //lay doi tuong listview dua vao id
-        list = (ListView) findViewById(R.id.lvContact);
+        mListViewContact = (ListView) findViewById(R.id.lvContact);
 
         //tao Adapter
-        ContactAdapter adapter = new ContactAdapter(this,R.layout.item_list_contact,mList);
+        ContactAdapter adapter = new ContactAdapter(this, R.layout.item_list_contact, mArrayListContacts);
 
         //do data len list
-        list.setAdapter(adapter);
+        mListViewContact.setAdapter(adapter);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        mListViewContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String val = name[position];
-                Toast.makeText(getApplicationContext(), "" + val, Toast.LENGTH_SHORT).show();  }
-        } );
+                Toast.makeText(getApplicationContext(), "" + val, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -66,9 +66,6 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -84,9 +81,9 @@ public class MainActivity extends Activity {
             // Create a new object for each list item
             Contact mcontact = new Contact();
             mcontact.setNameUser(name[i]);
-            mcontact.setAvatar(avata[i]);
+            mcontact.setAvatar(avarta[i]);
             // Add this object into the ArrayList myList
-            mList.add(mcontact);
+            mArrayListContacts.add(mcontact);
         }
 
     }

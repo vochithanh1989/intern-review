@@ -20,26 +20,24 @@ import intership.dev.contact.R;
 
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
-
     Context mContext;
-    ArrayList<Contact> mList = new ArrayList<Contact>();
+    ArrayList<Contact> mLists = new ArrayList<Contact>();
 
     public ContactAdapter(Context context, int resource, List<Contact> objects) {
         super(context, resource, objects);
         // TODO Auto-generated constructor stub
-
         this.mContext = context;
-        this.mList = new ArrayList<Contact>(objects);
+        this.mLists = new ArrayList<Contact>(objects);
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mLists.size();
     }
 
     @Override
     public Contact getItem(int position) {
-        return mList.get(position);
+        return mLists.get(position);
     }
 
     @Override
@@ -49,34 +47,26 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         final ViewHolder mViewHolder;
-
         if (convertView == null) {
             LayoutInflater inflate = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflate.inflate(R.layout.item_list_contact, null);
-
             mViewHolder = new ViewHolder();
-
             mViewHolder.mAvarta = (ImageView) convertView.findViewById(R.id.imgAvarta);
             mViewHolder.mNameContact = (TextView) convertView.findViewById(R.id.tvNameContact);
-
-
             convertView.setTag(mViewHolder);
         } else {
 
             mViewHolder = (ViewHolder) convertView.getTag();
         }
-        Contact people = mList.get(position);
+        Contact people = mLists.get(position);
         mViewHolder.mNameContact.setText(people.getNameUser());
         mViewHolder.mAvarta.setImageResource(people.getAvatar());
         return convertView;
-
     }
 
     static class ViewHolder {
-
         TextView mNameContact;
         ImageView mAvarta;
     }

@@ -8,7 +8,7 @@
         android:id="@+id/llHearder"
         android:layout_width="match_parent"
         android:layout_height="53dp"
-        android:background="#00bbd2">
+        android:background="@color/backgroup.header.layout.main">
 
         <TextView
             android:id="@+id/txtContact"
