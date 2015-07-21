@@ -4,7 +4,9 @@ package intership.dev.contact.Adapter;
  * Created by thanhitbk on 21/07/2015.
  */
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,20 +57,51 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             mViewHolder = new ViewHolder();
             mViewHolder.mAvarta = (ImageView) convertView.findViewById(R.id.imgAvarta);
             mViewHolder.mNameContact = (TextView) convertView.findViewById(R.id.tvNameContact);
+            mViewHolder.mImageDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
+            mViewHolder.mImageEdit = (ImageView) convertView.findViewById(R.id.imgEdit);
             convertView.setTag(mViewHolder);
         } else {
 
             mViewHolder = (ViewHolder) convertView.getTag();
         }
-        Contact people = mLists.get(position);
-        mViewHolder.mNameContact.setText(people.getNameUser());
-        mViewHolder.mAvarta.setImageResource(people.getAvatar());
+        final Contact mContact = mLists.get(position);
+        mViewHolder.mNameContact.setText(mContact.getNameUser());
+        mViewHolder.mAvarta.setImageResource(mContact.getAvatar());
+
+        //Delete item listview Contacts
+        mViewHolder.mImageDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = mViewHolder.mNameContact.getText().toString();
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setInverseBackgroundForced(false);
+                alertDialog.setMessage("Are you sure you to delete " + name + " ?")
+                        .setTitle(null)
+                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mLists.remove(position);
+                                notifyDataSetChanged();
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
         return convertView;
     }
 
     static class ViewHolder {
         TextView mNameContact;
         ImageView mAvarta;
+        ImageView mImageDelete;
+        ImageView mImageEdit;
     }
 }
 

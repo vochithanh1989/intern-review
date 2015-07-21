@@ -31,11 +31,11 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@+id/btnDelete"
+        android:layout_toLeftOf="@+id/imgDelete"
         android:src="@drawable/ic_edit"/>
 
     <ImageView
-        android:id="@+id/btnDelete"
+        android:id="@+id/imgDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
