@@ -1,17 +1,60 @@
 package intership.dev.contact;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import intership.dev.contact.Adapter.ContactAdapter;
+import intership.dev.contact.Model.Contact;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+
+    ArrayList<Contact> mList = new ArrayList<Contact>();
+    ListView list;
+    String[] name = new String[]{
+            "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
+            "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
+            "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
+            "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
+            "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano"
+    };
+
+    int[] avata = new int[]{
+            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
+            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
+            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
+            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
+            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getDataPeople();
+        //lay doi tuong listview dua vao id
+        list = (ListView) findViewById(R.id.lvContact);
+
+        //tao Adapter
+        ContactAdapter adapter = new ContactAdapter(this,R.layout.item_list_contact,mList);
+
+        //do data len list
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                String val = name[position];
+                Toast.makeText(getApplicationContext(), "" + val, Toast.LENGTH_SHORT).show();  }
+        } );
     }
 
     @Override
@@ -34,5 +77,17 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getDataPeople() {
+        for (int i = 0; i < 20; i++) {
+            // Create a new object for each list item
+            Contact mcontact = new Contact();
+            mcontact.setNameUser(name[i]);
+            mcontact.setAvatar(avata[i]);
+            // Add this object into the ArrayList myList
+            mList.add(mcontact);
+        }
+
     }
 }
