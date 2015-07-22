@@ -8,6 +8,21 @@ import android.widget.ImageView;
 public class Contact {
     private int mAvatar;
     private String mNameUser;
+    private String mDescription;
+
+    public Contact(String mNameUser, String mDescription, int mAvatar) {
+        this.mNameUser = mNameUser;
+        this.mDescription = mDescription;
+        this.mAvatar = mAvatar;
+    }
+    public String getmDescription() {
+        return mDescription;
+    }
+
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
+    }
+
     private ImageView mImageEdit;
     private ImageView mImageDelete;
 

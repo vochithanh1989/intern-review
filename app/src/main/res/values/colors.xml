@@ -4,4 +4,9 @@
        <color name="button.backgroup.item.list">#009dd9</color>
     <color name="backgroup.header.layout.main">#00bbd2</color>
     <color name="backgroup.item.list.contact">#ffffff</color>
+    <color name="relativelayout.background_contacts">#00bbd2</color>
+    <color name="textview.text_color">#000</color>
+    <color name="dark_slate_gray">#2F4F4F</color>
+    <color name="gray_2">#AFAFAF</color>
+    <color name="gray_1">#C0C0C0</color>
 </resources>

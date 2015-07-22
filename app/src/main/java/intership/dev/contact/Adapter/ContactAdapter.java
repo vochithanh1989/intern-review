@@ -4,12 +4,14 @@ package intership.dev.contact.Adapter;
  * Created by thanhitbk on 21/07/2015.
  */
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,33 +69,39 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         final Contact mContact = mLists.get(position);
         mViewHolder.mNameContact.setText(mContact.getNameUser());
         mViewHolder.mAvarta.setImageResource(mContact.getAvatar());
-
-        //Delete item listview Contacts
         mViewHolder.mImageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mViewHolder.mNameContact.getText().toString();
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setInverseBackgroundForced(false);
-                alertDialog.setMessage("Are you sure you to delete " + name + " ?")
-                        .setTitle(null)
-                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                mLists.remove(position);
-                                notifyDataSetChanged();
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-                alertDialog.show();
+                final Dialog dialog = new Dialog(mContext, R.style.styleDialog);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.setContentView(R.layout.dialog_delete_contact);
+
+                TextView mOkDialog = (TextView) dialog.findViewById(R.id.tvOkDialog);
+                TextView mCancelDialog = (TextView) dialog.findViewById(R.id.tvCancelDialog);
+                TextView mMessage = (TextView) dialog.findViewById(R.id.tvMessageDialog);
+                String mName = mViewHolder.mNameContact.getText().toString();
+                mMessage.setText(Html.fromHtml("Are you sure you want to delete " + "<b>" + mName + "</b>" + " ?"));
+                dialog.show();
+
+                mCancelDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                mOkDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mLists.remove(position);
+                        notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
             }
         });
+
         return convertView;
     }
 

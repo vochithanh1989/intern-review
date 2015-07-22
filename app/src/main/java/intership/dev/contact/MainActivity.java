@@ -1,22 +1,23 @@
 package intership.dev.contact;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import intership.dev.contact.Adapter.ContactAdapter;
 import intership.dev.contact.Model.Contact;
+import intership.dev.contact.Utility.LoadMoreListView;
 
 
 public class MainActivity extends Activity {
     ArrayList<Contact> mArrayListContacts = new ArrayList<Contact>();
-    ListView mListViewContact;
-    String[] name = new String[]{
+    LoadMoreListView mListViewContact;
+    ContactAdapter adapter;
+    String[] mNames = new String[]{
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
             "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
@@ -24,7 +25,7 @@ public class MainActivity extends Activity {
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano"
     };
 
-    int[] avarta = new int[]{
+    int[] mAvatars = new int[]{
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
@@ -32,14 +33,9 @@ public class MainActivity extends Activity {
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4
     };
 
-    @Override
-    public boolean onContextItemSelected(final MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
-                item.getMenuInfo();
-
-        final int pos = info.position;
-        return super.onContextItemSelected(item);
-    }
+    private String[] mDescriptions = new String[]{
+            "Beckham", "Rooney", "Ronaldo", "Messi", "Robben", "Cassilas", "Suarez", "Zidane", "Figo", "Carlos",
+            "Beckham", "Rooney", "Ronaldo", "Messi", "Robben", "Cassilas", "Suarez", "Zidane", "Figo", "Carlos"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +43,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         getDataContact();
-        mListViewContact = (ListView) findViewById(R.id.lvContact);
-        final ContactAdapter adapter = new ContactAdapter(this, R.layout.item_list_contact, mArrayListContacts);
+        mListViewContact = (LoadMoreListView) findViewById(R.id.lvContact);
+        adapter = new ContactAdapter(this, R.layout.item_list_contact, mArrayListContacts);
         mListViewContact.setAdapter(adapter);
+
+        //mLoadMoreListView.setAdapter(adapter);
+        mListViewContact.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                new LoadDataTask().execute();
+            }
+        });
     }
 
     @Override
@@ -68,12 +72,57 @@ public class MainActivity extends Activity {
     }
 
     private void getDataContact() {
-        for (int i = 0; i < 20; i++) {
-            Contact mcontact = new Contact();
-            mcontact.setNameUser(name[i]);
-            mcontact.setAvatar(avarta[i]);
-            mArrayListContacts.add(mcontact);
+        for (int i = 0; i < mNames.length; i++) {
+            Contact mContact = new Contact(mNames[i], mDescriptions[i], mAvatars[i]);
+            mContact.setNameUser(mNames[i]);
+            mContact.setAvatar(mAvatars[i]);
+            mContact.setmDescription(mDescriptions[i]);
+            mArrayListContacts.add(mContact);
         }
 
     }
+
+    private class LoadDataTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            if (isCancelled()) {
+                return null;
+            }
+
+            // Simulates a background task
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+
+            // add Loadmore Item
+            for (int i = 0; i < mNames.length; i++) {
+                Contact mItem = new Contact(mNames[i], mDescriptions[i], mAvatars[i]);
+                mArrayListContacts.add(mItem);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+
+            // We need notify the adapter that the data have been changed
+            adapter.notifyDataSetChanged();
+
+            // Call onLoadMoreComplete when the LoadMore task, has finished
+            ((LoadMoreListView) mListViewContact).onLoadMoreComplete();
+
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected void onCancelled() {
+            // Notify the loading more operation has finished
+            ((LoadMoreListView) mListViewContact).onLoadMoreComplete();
+        }
+    }
+
 }
