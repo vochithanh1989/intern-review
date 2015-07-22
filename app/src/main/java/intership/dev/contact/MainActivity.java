@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
                 new LoadDataTask().execute();
             }
         });
-    }
+            }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

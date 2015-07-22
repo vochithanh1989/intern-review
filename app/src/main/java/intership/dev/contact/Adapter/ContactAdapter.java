@@ -4,9 +4,11 @@ package intership.dev.contact.Adapter;
  * Created by thanhitbk on 21/07/2015.
  */
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import intership.dev.contact.EditActivity;
+import intership.dev.contact.Fragment.EditContactFragment;
 import intership.dev.contact.Model.Contact;
 import intership.dev.contact.R;
 
@@ -52,17 +54,20 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         final ViewHolder mViewHolder;
+
         if (convertView == null) {
             LayoutInflater inflate = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflate.inflate(R.layout.item_list_contact, null);
             mViewHolder = new ViewHolder();
+
             mViewHolder.mAvarta = (ImageView) convertView.findViewById(R.id.imgAvarta);
             mViewHolder.mNameContact = (TextView) convertView.findViewById(R.id.tvNameContact);
             mViewHolder.mImageDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
             mViewHolder.mImageEdit = (ImageView) convertView.findViewById(R.id.imgEdit);
+
             convertView.setTag(mViewHolder);
         } else {
 
@@ -113,8 +118,13 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent i = new Intent(mContext, EditActivity.class);
-                mContext.startActivity(i);
+
+                FragmentManager mFragmentManager = ((Activity) mContext).getFragmentManager();
+                FragmentTransaction FragmentTransaction = mFragmentManager.beginTransaction();
+                EditContactFragment mEditContactFragment = new EditContactFragment();
+                FragmentTransaction.replace(R.id.rlcontacts, mEditContactFragment);
+                FragmentTransaction.addToBackStack(null);
+                FragmentTransaction.commit();
             }
         });
         return convertView;
