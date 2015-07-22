@@ -6,6 +6,7 @@ package intership.dev.contact.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import intership.dev.contact.EditActivity;
 import intership.dev.contact.Model.Contact;
 import intership.dev.contact.R;
 
@@ -69,6 +71,8 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         final Contact mContact = mLists.get(position);
         mViewHolder.mNameContact.setText(mContact.getNameUser());
         mViewHolder.mAvarta.setImageResource(mContact.getAvatar());
+
+        //Click Imagge Delete on item listview
         mViewHolder.mImageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,13 +88,14 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 mMessage.setText(Html.fromHtml("Are you sure you want to delete " + "<b>" + mName + "</b>" + " ?"));
                 dialog.show();
 
+                //Click Cancel on dialog delete
                 mCancelDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
                     }
                 });
-
+                //Click Ok on dialog delete
                 mOkDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -102,6 +107,16 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             }
         });
 
+        //Click Image Edit on item listview
+        mViewHolder.mImageEdit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent i = new Intent(mContext, EditActivity.class);
+                mContext.startActivity(i);
+            }
+        });
         return convertView;
     }
 

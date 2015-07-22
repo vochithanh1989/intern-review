@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
             mContactAdapter.notifyDataSetChanged();
 
             // Call onLoadMoreComplete when the LoadMore task, has finished
-            ((LoadMoreListView) mListViewContact).onLoadMoreComplete();
+            mListViewContact.onLoadMoreComplete();
 
             super.onPostExecute(result);
         }
@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onCancelled() {
             // Notify the loading more operation has finished
-            ((LoadMoreListView) mListViewContact).onLoadMoreComplete();
+             mListViewContact.onLoadMoreComplete();
         }
     }
 
