@@ -3,4 +3,7 @@
 
     <string name="header_layout_main">Contacts</string>
     <string name="action_settings">Settings</string>
+    <string name="textview.dialog.button_OK">OK</string>
+    <string name="textview.dialog.button_cancel">Cancel</string>
+    <string name="button.text.Save">Save</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import intership.dev.contact.Utility.LoadMoreListView;
 public class MainActivity extends Activity {
     ArrayList<Contact> mArrayListContacts = new ArrayList<Contact>();
     LoadMoreListView mListViewContact;
-    ContactAdapter adapter;
+    ContactAdapter  mContactAdapter;
     String[] mNames = new String[]{
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
             "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
@@ -44,8 +45,8 @@ public class MainActivity extends Activity {
 
         getDataContact();
         mListViewContact = (LoadMoreListView) findViewById(R.id.lvContact);
-        adapter = new ContactAdapter(this, R.layout.item_list_contact, mArrayListContacts);
-        mListViewContact.setAdapter(adapter);
+        mContactAdapter = new ContactAdapter(this, R.layout.item_list_contact, mArrayListContacts);
+        mListViewContact.setAdapter(mContactAdapter);
 
         //mLoadMoreListView.setAdapter(adapter);
         mListViewContact.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
@@ -58,9 +59,10 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+            }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -110,7 +112,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Void result) {
 
             // We need notify the adapter that the data have been changed
-            adapter.notifyDataSetChanged();
+            mContactAdapter.notifyDataSetChanged();
 
             // Call onLoadMoreComplete when the LoadMore task, has finished
             ((LoadMoreListView) mListViewContact).onLoadMoreComplete();

@@ -9,4 +9,8 @@
     <color name="dark_slate_gray">#2F4F4F</color>
     <color name="gray_2">#AFAFAF</color>
     <color name="gray_1">#C0C0C0</color>
+    <color name="textview.dialog.message_color">#4f4c4c</color>
+    <color name="textview.dialog.button_color">#007aff</color>
+    <color name="textview.background.name_edit">#f9f9f9</color>
+    <color name="textview.color.text_edit">#626262</color>
 </resources>

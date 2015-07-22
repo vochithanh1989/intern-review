@@ -16,5 +16,7 @@
     <dimen name="progressbar.padding">3dp</dimen>
     <dimen name="progressbar.width">36dp</dimen>
     <dimen name="progressbar.height">36dp</dimen>
+    <dimen name="textview.size.edit_name">25sp</dimen>
+    <dimen name="view.height">0.5dp</dimen>
 
 </resources>
