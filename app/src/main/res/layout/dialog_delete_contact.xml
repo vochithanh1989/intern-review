@@ -5,7 +5,7 @@
     android:layout_gravity="center_vertical"
     android:layout_marginLeft="40dp"
     android:layout_marginRight="40dp"
-    android:background="#d0f2f2f2"
+    android:background="@drawable/bg_dialog_delete_contact"
     android:orientation="vertical">
 
     <RelativeLayout

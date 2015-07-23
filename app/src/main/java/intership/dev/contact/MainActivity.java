@@ -16,10 +16,10 @@ import intership.dev.contact.Utility.LoadMoreListView;
 
 
 public class MainActivity extends Activity {
-    ArrayList<Contact> mArrayListContacts = new ArrayList<Contact>();
-    LoadMoreListView mListViewContact;
-    ContactAdapter mContactAdapter;
-    String[] mNames = new String[]{
+    private ArrayList<Contact> mArrayListContacts = new ArrayList<Contact>();
+    private LoadMoreListView mListViewContact;
+    private ContactAdapter mContactAdapter;
+    private String[] mNames = new String[]{
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
             "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
             "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano"
     };
 
-    int[] mAvatars = new int[]{
+    private int[] mAvatars = new int[]{
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
             R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
@@ -60,8 +60,8 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        MenuInflater mInflater = getMenuInflater();
+        mInflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -74,9 +74,9 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            Contact contact = (Contact) data.getSerializableExtra("contact");
-            int position = data.getIntExtra("position", -1);
-            mArrayListContacts.set(position, contact);
+            Contact mContact = (Contact) data.getSerializableExtra("contact");
+            int mPosition = data.getIntExtra("position", -1);
+            mArrayListContacts.set(mPosition, mContact);
             mContactAdapter.notifyDataSetChanged();
         }
     }
@@ -98,6 +98,10 @@ public class MainActivity extends Activity {
 
     }
 
+
+    /**
+     * Asyntact load more list
+     */
     private class LoadDataTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -106,19 +110,13 @@ public class MainActivity extends Activity {
             if (isCancelled()) {
                 return null;
             }
-
             // Simulates a background task
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-            // add Loadmore Item
-            for (int i = 0; i < mNames.length; i++) {
-                Contact mItem = new Contact(mNames[i], mDescriptions[i], mAvatars[i]);
-                mArrayListContacts.add(mItem);
-            }
-
+            getDataContact();
             return null;
         }
 

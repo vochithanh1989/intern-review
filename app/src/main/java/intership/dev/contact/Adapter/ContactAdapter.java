@@ -29,8 +29,8 @@ import intership.dev.contact.R;
 
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
-    Context mContext;
-    ArrayList<Contact> mLists = new ArrayList<Contact>();
+    private Context mContext;
+    private ArrayList<Contact> mLists = new ArrayList<Contact>();
 
     public ContactAdapter(Context context, int resource, List<Contact> objects) {
         super(context, resource, objects);

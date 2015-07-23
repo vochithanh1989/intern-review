@@ -18,8 +18,9 @@ public class Contact implements Serializable {
         this.mNameUser = mNameUser;
         this.mDescription = mDescription;
         this.mAvatar = mAvatar;
-        isDelete=false;
+        isDelete = false;
     }
+
     public String getmDescription() {
         return mDescription;
     }
@@ -62,6 +63,7 @@ public class Contact implements Serializable {
     public void setAvatar(int mAvatar) {
         this.mAvatar = mAvatar;
     }
+
     public void setIsDelete(boolean isDelete) {
         this.isDelete = isDelete;
     }

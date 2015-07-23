@@ -18,7 +18,7 @@ import intership.dev.contact.R;
 import intership.dev.contact.Utility.CircleImageView;
 
 /**
- * Created by hodachop93 on 22/07/2015.
+ * Created by thanhitbk on 22/07/2015.
  */
 public class EditContactFragment extends Fragment {
     @Nullable

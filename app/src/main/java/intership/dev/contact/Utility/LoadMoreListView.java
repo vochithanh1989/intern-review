@@ -1,12 +1,7 @@
 package intership.dev.contact.Utility;
 
-/**
- * Created by thanhitbk on 22/07/2015.
- */
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -87,7 +82,7 @@ public class LoadMoreListView extends ListView implements OnScrollListener {
      * @param l The scroll listener.
      */
     @Override
-    public void setOnScrollListener(AbsListView.OnScrollListener l) {
+    public void setOnScrollListener(OnScrollListener l) {
         mOnScrollListener = l;
     }
 
@@ -142,7 +137,6 @@ public class LoadMoreListView extends ListView implements OnScrollListener {
     }
 
     public void onLoadMore() {
-        Log.d(TAG, "onLoadMore");
         if (mOnLoadMoreListener != null) {
             mOnLoadMoreListener.onLoadMore();
         }
