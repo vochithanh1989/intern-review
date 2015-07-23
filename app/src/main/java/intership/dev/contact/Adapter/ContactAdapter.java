@@ -10,6 +10,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import intership.dev.contact.R;
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
     Context mContext;
+    Activity mActicity;
     ArrayList<Contact> mLists = new ArrayList<Contact>();
 
     public ContactAdapter(Context context, int resource, List<Contact> objects) {
@@ -86,9 +88,11 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 dialog.setContentView(R.layout.dialog_delete_contact);
 
+
                 TextView mOkDialog = (TextView) dialog.findViewById(R.id.tvOkDialog);
                 TextView mCancelDialog = (TextView) dialog.findViewById(R.id.tvCancelDialog);
                 TextView mMessage = (TextView) dialog.findViewById(R.id.tvMessageDialog);
+
                 String mName = mViewHolder.mNameContact.getText().toString();
                 mMessage.setText(Html.fromHtml("Are you sure you want to delete " + "<b>" + mName + "</b>" + " ?"));
                 dialog.show();
@@ -117,11 +121,16 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
+                //Send data from Activity to EditContactFragment
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("contact", mContact);
+                EditContactFragment mEditContactFragment = new EditContactFragment();
+                mEditContactFragment.setArguments(bundle);
+
+                // TODO Auto-generated method stub
                 FragmentManager mFragmentManager = ((Activity) mContext).getFragmentManager();
                 FragmentTransaction FragmentTransaction = mFragmentManager.beginTransaction();
-                EditContactFragment mEditContactFragment = new EditContactFragment();
                 FragmentTransaction.replace(R.id.rlcontacts, mEditContactFragment);
                 FragmentTransaction.addToBackStack(null);
                 FragmentTransaction.commit();
@@ -129,6 +138,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         });
         return convertView;
     }
+
 
     static class ViewHolder {
         TextView mNameContact;

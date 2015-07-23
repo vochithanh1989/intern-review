@@ -32,7 +32,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/imgDelete"
-        android:src="@drawable/ic_edit"/>
+        android:src="@drawable/bg_img_edit"/>
 
     <ImageView
         android:id="@+id/imgDelete"
@@ -41,7 +41,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:src="@drawable/ic_delete" />
+        android:src="@drawable/bg_img_delete" />
 
 
 </RelativeLayout>

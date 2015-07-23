@@ -34,7 +34,7 @@
         android:layout_height="127dp" >
 
         <intership.dev.contact.Utility.CircleImageView
-            android:id="@+id/imgAvatar"
+            android:id="@+id/imgAvatarEdit"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerVertical="true"
@@ -43,11 +43,11 @@
             />
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imgAvatar"
+            android:layout_toRightOf="@+id/imgAvatarEdit"
             android:paddingLeft="40dp"
             android:text="Luke Skywalker Bell"
             android:textColor="#505050"
