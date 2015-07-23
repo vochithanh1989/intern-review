@@ -30,7 +30,6 @@ import intership.dev.contact.R;
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
     Context mContext;
-    Activity mActicity;
     ArrayList<Contact> mLists = new ArrayList<Contact>();
 
     public ContactAdapter(Context context, int resource, List<Contact> objects) {
@@ -83,7 +82,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         mViewHolder.mImageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(mContext, R.style.styleDialog);
+                final Dialog dialog = new Dialog(mContext, R.style.StyleDialog);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 dialog.setContentView(R.layout.dialog_delete_contact);
@@ -125,6 +124,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                 //Send data from Activity to EditContactFragment
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("contact", mContact);
+                bundle.putInt("mposition", position);
                 EditContactFragment mEditContactFragment = new EditContactFragment();
                 mEditContactFragment.setArguments(bundle);
 

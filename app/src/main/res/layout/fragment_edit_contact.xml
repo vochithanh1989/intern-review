@@ -108,7 +108,7 @@ supporting roles on screen."
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/txtButonOK"
+            android:id="@+id/tvSaveEdit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -124,7 +124,7 @@ supporting roles on screen."
             android:background="#b0b0b5" />
 
         <TextView
-            android:id="@+id/txtButonCancel"
+            android:id="@+id/tvCancelEdit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
