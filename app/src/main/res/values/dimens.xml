@@ -6,6 +6,7 @@
     <dimen name="diameter.circle.avarta">50dp</dimen>
     <dimen name="header.height">53dp</dimen>
     <dimen name="view.height">0.2dp</dimen>
+    <dimen name="listview.item.height">70dp</dimen>
 
     <dimen name="circle_image.diameter.edit">100dp</dimen>
     <dimen name="circle_image.padding_left.edit">10dp</dimen>

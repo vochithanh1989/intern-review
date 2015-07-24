@@ -17,14 +17,14 @@ import intership.dev.contact.R;
  * display all information of listview item
  */
 public class EditContactFragment extends Fragment implements View.OnClickListener {
-    private ImageView imgAvatar,imgBack;
+    private ImageView imgAvatar, imgBack;
     private TextView tvName;
     private EditText edtDescription, edtName;
     private TextView btnSave, btnCancel;
     private OnChangeItemListener mListenerOnChange;
 
     //using for method onClick
-    private intership.dev.contact.Model.Contact mModel;
+    private intership.dev.contact.Model.Contact mContact;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,20 +34,21 @@ public class EditContactFragment extends Fragment implements View.OnClickListene
     }
 
     private void init(View v) {
+        btnSave = (TextView) v.findViewById(R.id.tvSaveEdit);
+        btnCancel = (TextView) v.findViewById(R.id.tvCancelEdit);
         imgAvatar = (ImageView) v.findViewById(R.id.imgAvatarEdit);
         tvName = (TextView) v.findViewById(R.id.tvName);
         edtDescription = (EditText) v.findViewById(R.id.edtDescriptionEdit);
-        btnSave = (TextView) v.findViewById(R.id.tvSaveEdit);
-        btnCancel = (TextView) v.findViewById(R.id.tvCancelEdit);
         edtName = (EditText) v.findViewById(R.id.edtNameEdit);
-        imgBack= (ImageView)v.findViewById(R.id.imgBack);
+        imgBack = (ImageView) v.findViewById(R.id.imgBack);
 
         // give data from ListContactFragment
         Bundle dataBundle = this.getArguments();
-        mModel = (Contact) dataBundle.getSerializable("dataBundle");
-        tvName.setText(mModel.getName());
-        imgAvatar.setImageResource(mModel.getAvatar());
-        edtDescription.setText(mModel.getDescription());
+        mContact = (Contact) dataBundle.getSerializable("sendData");
+        tvName.setText(mContact.getName());
+        imgAvatar.setImageResource(mContact.getAvatar());
+        edtDescription.setText(mContact.getDescription());
+        edtName.setText(mContact.getName());
         btnSave.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         imgBack.setOnClickListener(this);
@@ -59,15 +60,17 @@ public class EditContactFragment extends Fragment implements View.OnClickListene
         int id = view.getId();
         switch (id) {
             case R.id.tvSaveEdit:
-                mModel.setName(edtName.getText().toString());
-                mModel.setDescription(edtDescription.getText().toString());
-                mListenerOnChange.onChange(mModel);
+                mContact.setName(edtName.getText().toString());
+                mContact.setDescription(edtDescription.getText().toString());
+                mListenerOnChange.onChange(mContact);
                 getActivity().onBackPressed();
                 break;
             case R.id.tvCancelEdit:
                 getActivity().onBackPressed();
+                break;
             case R.id.imgBack:
                 getActivity().onBackPressed();
+                break;
         }
     }
 

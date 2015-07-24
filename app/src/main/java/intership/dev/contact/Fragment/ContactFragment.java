@@ -17,7 +17,7 @@ import intership.dev.contact.R;
 import intership.dev.contact.Utility.LoadMoreListView;
 
 /**
- * Created by thanhitbk on 22/07/2015.
+ * Created by hoai on 22/07/2015.
  * Fragment ListView Contact to dis play listview on screen
  */
 public class ContactFragment extends Fragment implements LoadMoreListView.OnLoadMoreListener {

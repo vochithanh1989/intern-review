@@ -115,7 +115,7 @@ supporting roles on screen."
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/button.text.Save"
+            android:text="@string/button.text.save"
             android:textColor="@color/textview.dialog.button_color" />
 
         <View
@@ -130,7 +130,7 @@ supporting roles on screen."
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/textview.dialog.button_cancel"
+            android:text="@string/button.text.cancel"
             android:textColor="@color/textview.dialog.button_color" />
     </LinearLayout>
 

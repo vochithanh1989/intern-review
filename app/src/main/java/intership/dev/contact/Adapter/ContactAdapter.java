@@ -24,9 +24,9 @@ import intership.dev.contact.Utility.DeleteDialog;
  */
 public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickContactDialog,
         DialogInterface.OnDismissListener, EditContactFragment.OnChangeItemListener {
-    private FragmentActivity mActivity;
+    private FragmentActivity mFragmentActivity;
     private ArrayList<Contact> mContacts = new ArrayList<>();
-    private DeleteDialog mDialog;
+    private DeleteDialog mDeleteDialog;
 
     // param use for method callEditContactFragment
     private FragmentManager mFragmentManager;
@@ -36,28 +36,28 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
     /**
      * Constructor
      *
-     * @param mActivity
+     * @param mFragmentActivity
      * @param mContacts
      */
-    public ContactAdapter(FragmentActivity mActivity, ArrayList<Contact> mContacts) {
-        this.mActivity = mActivity;
+    public ContactAdapter(FragmentActivity mFragmentActivity, ArrayList<Contact> mContacts) {
+        this.mFragmentActivity = mFragmentActivity;
         this.mContacts = mContacts;
-        mDialog = new DeleteDialog(mActivity);
-        mDialog.setOnClickListViewContactListener(this);
-        mDialog.setOnDismissListener(this);
+        mDeleteDialog = new DeleteDialog(mFragmentActivity);
+        mDeleteDialog.setOnClickListViewContactListener(this);
+        mDeleteDialog.setOnDismissListener(this);
 
     }
 
     @Override
     public void onClickBtnOK(View v) {
-        mContacts.remove(mDialog.getPosition());
+        mContacts.remove(mDeleteDialog.getPosition());
         notifyDataSetChanged();
-        mDialog.dismiss();
+        mDeleteDialog.dismiss();
     }
 
     @Override
     public void onClickBtnCancel(View v) {
-        mDialog.dismiss();
+        mDeleteDialog.dismiss();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_list_contact, viewGroup, false);
+            convertView = LayoutInflater.from(mFragmentActivity).inflate(R.layout.item_list_contact, viewGroup, false);
             holder = new ViewHolder();
             holder.tvName = (TextView) convertView.findViewById(R.id.tvNameContact);
             holder.imgAvatar = (ImageView) convertView.findViewById(R.id.imgAvarta);
@@ -114,14 +114,14 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
      * @param contactModel is a object to refactor
      */
     private void callEditContactFragment(Contact contactModel) {
-        mFragmentManager = mActivity.getSupportFragmentManager();
+        mFragmentManager = mFragmentActivity.getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         if (mEditContactFragment == null) {
             mEditContactFragment = new EditContactFragment();
             mEditContactFragment.setOnChangeItemListener(this);
         }
         Bundle dataBundle = new Bundle();
-        dataBundle.putSerializable("dataBundle", contactModel);
+        dataBundle.putSerializable("sendData", contactModel);
 
         mEditContactFragment.setArguments(dataBundle);
         mFragmentTransaction.replace(R.id.rlContainer, mEditContactFragment);
@@ -174,9 +174,9 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDialog.setPosition(position);
-                mDialog.show();
-                mDialog.setDialogMessage(model);
+                mDeleteDialog.setPosition(position);
+                mDeleteDialog.show();
+                mDeleteDialog.setDialogMessage(model);
             }
         });
         holder.imgEdit.setOnClickListener(new View.OnClickListener() {
