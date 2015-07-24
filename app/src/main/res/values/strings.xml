@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Contact</string>
-
     <string name="header_layout_main">Contacts</string>
     <string name="header_layout_edit">Contact</string>
     <string name="action_settings">Settings</string>
