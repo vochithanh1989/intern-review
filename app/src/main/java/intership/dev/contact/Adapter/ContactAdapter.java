@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,14 +28,13 @@ import intership.dev.contact.Model.Contact;
 import intership.dev.contact.R;
 
 
-public class ContactAdapter extends ArrayAdapter<Contact> {
+public class ContactAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Contact> mLists = new ArrayList<Contact>();
 
-    public ContactAdapter(Context context, int resource, List<Contact> objects) {
-        super(context, resource, objects);
+    public ContactAdapter(Context mContext, int item_list_contact, List<Contact> objects) {
         // TODO Auto-generated constructor stub
-        this.mContext = context;
+        this.mContext = mContext;
         this.mLists = new ArrayList<Contact>(objects);
     }
 
