@@ -13,4 +13,5 @@
     <color name="textview.dialog.button_color">#007aff</color>
     <color name="textview.background.name_edit">#f9f9f9</color>
     <color name="textview.color.text_edit">#626262</color>
+    <color name="dialog.background">#ccffffff</color>
 </resources>

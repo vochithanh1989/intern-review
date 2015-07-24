@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import intership.dev.contact.Fragment.ContactFragment;
 import intership.dev.contact.R;
 
 
@@ -93,7 +94,7 @@ public class LoadMoreListView extends ListView implements OnScrollListener {
      * @param onLoadMoreListener The callback to run.
      */
 
-    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+    public void setOnLoadMoreListener(ContactFragment onLoadMoreListener) {
         mOnLoadMoreListener = onLoadMoreListener;
     }
 

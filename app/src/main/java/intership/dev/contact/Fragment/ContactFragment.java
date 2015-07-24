@@ -1,7 +1,9 @@
 package intership.dev.contact.Fragment;
 
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,76 +17,67 @@ import intership.dev.contact.R;
 import intership.dev.contact.Utility.LoadMoreListView;
 
 /**
- * Created by thanhitbk on 24/07/2015.
+ * Created by thanhitbk on 22/07/2015.
+ * Fragment ListView Contact to dis play listview on screen
  */
-public class ContactFragment extends Fragment {
-    private ArrayList<Contact> mArrayListContacts = new ArrayList<Contact>();
-    private LoadMoreListView mListViewContact;
+public class ContactFragment extends Fragment implements LoadMoreListView.OnLoadMoreListener {
+    private LoadMoreListView lvContact;
+    private ArrayList<Contact> mContacts = new ArrayList<>();
     private ContactAdapter mContactAdapter;
-    private String[] mNames = new String[]{
-            "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
-            "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
-            "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano",
-            "Walter Chavis", "Wilbert Rowen", "Andrea Gruber", "Dario Bennington",
-            "Hugh Helbert", "Steven Seo", "Dwight Pera", "Francis Cipriano"
-    };
 
-    private int[] mAvatars = new int[]{
-            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
-            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
-            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
-            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4,
-            R.drawable.img_avarta1, R.drawable.img_avarta2, R.drawable.img_avarta3, R.drawable.img_avarta4
-    };
-
-    private String[] mDescriptions = new String[]{
-            "Beckham", "Rooney", "Ronaldo", "Messi", "Robben", "Cassilas", "Suarez", "Zidane", "Figo", "Carlos",
-            "Beckham", "Rooney", "Ronaldo", "Messi", "Robben", "Cassilas", "Suarez", "Zidane", "Figo", "Carlos"};
-
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_list_contact, container, false);
+        View mListContact = inflater.inflate(R.layout.fragment_list_contact, container, false);
+        init(mListContact);
+        createDefaultData();
+        mContactAdapter = new ContactAdapter(getActivity(), mContacts);
+        lvContact.setAdapter(mContactAdapter);
+        lvContact.setOnLoadMoreListener(this);
+        return mListContact;
 
-        getDataContact();
-        mListViewContact = (LoadMoreListView) rootView.findViewById(R.id.lvContact);
-        mContactAdapter = new ContactAdapter(getActivity(), R.layout.item_list_contact, mArrayListContacts);
-        mListViewContact.setAdapter(mContactAdapter);
-
-        //mLoadMoreListView.setAdapter(adapter);
-        mListViewContact.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                new LoadDataTask().execute();
-            }
-        });
-        return rootView;
     }
 
-    private void getDataContact() {
+    // Init fo first load listview
+    public void init(View v) {
+        lvContact = (LoadMoreListView) v.findViewById(R.id.lvContact);
+    }
+
+    // Generate data from first load listview
+    public void createDefaultData() {
+        String[] mNames = getResources().getStringArray(R.array.list_name);
+        TypedArray mAvatars = getResources().obtainTypedArray(R.array.list_avatar);
+        String[] mDescriptions = getResources().getStringArray(R.array.list_description);
         for (int i = 0; i < mNames.length; i++) {
-            Contact mContact = new Contact(mNames[i], mDescriptions[i], mAvatars[i]);
-            mArrayListContacts.add(mContact);
+            Contact mModel = new Contact(mNames[i], mDescriptions[i], mAvatars.getResourceId(i, 0));
+            mContacts.add(mModel);
         }
-
     }
-    /**
-     * Asyntact load more list
-     */
-    private class LoadDataTask extends AsyncTask<Void, Void, Void> {
 
+    //  Load more lisview
+    @Override
+    public void onLoadMore() {
+        new LoadDataTask().execute();
+    }
+
+
+    //  Class Load new data when listview go to end row
+    private class LoadDataTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-
             if (isCancelled()) {
                 return null;
             }
             // Simulates a background task
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            getDataContact();
+
+            // add Loadmore Item
+            createDefaultData();
+
             return null;
         }
 
@@ -95,7 +88,7 @@ public class ContactFragment extends Fragment {
             mContactAdapter.notifyDataSetChanged();
 
             // Call onLoadMoreComplete when the LoadMore task, has finished
-            mListViewContact.onLoadMoreComplete();
+            lvContact.onLoadMoreComplete();
 
             super.onPostExecute(result);
         }
@@ -103,7 +96,7 @@ public class ContactFragment extends Fragment {
         @Override
         protected void onCancelled() {
             // Notify the loading more operation has finished
-            mListViewContact.onLoadMoreComplete();
+            lvContact.onLoadMoreComplete();
         }
     }
 }

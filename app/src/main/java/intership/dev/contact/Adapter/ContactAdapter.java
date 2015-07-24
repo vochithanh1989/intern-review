@@ -1,149 +1,191 @@
 package intership.dev.contact.Adapter;
 
-/**
- * Created by thanhitbk on 21/07/2015.
- */
-
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import intership.dev.contact.Fragment.EditContactFragment;
 import intership.dev.contact.Model.Contact;
 import intership.dev.contact.R;
+import intership.dev.contact.Utility.DeleteDialog;
 
+/**
+ * Create Adapter for Listview Contacts
+ */
+public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickContactDialog,
+        DialogInterface.OnDismissListener, EditContactFragment.OnChangeItemListener {
+    private FragmentActivity mActivity;
+    private ArrayList<Contact> mContacts = new ArrayList<>();
+    private DeleteDialog mDialog;
 
-public class ContactAdapter extends BaseAdapter {
-    private Context mContext;
-    private ArrayList<Contact> mLists = new ArrayList<Contact>();
+    // param use for method callEditContactFragment
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
+    private EditContactFragment mEditContactFragment;
 
-    public ContactAdapter(Context mContext, int item_list_contact, List<Contact> objects) {
-        // TODO Auto-generated constructor stub
-        this.mContext = mContext;
-        this.mLists = new ArrayList<Contact>(objects);
+    /**
+     * Constructor
+     *
+     * @param mActivity
+     * @param mContacts
+     */
+    public ContactAdapter(FragmentActivity mActivity, ArrayList<Contact> mContacts) {
+        this.mActivity = mActivity;
+        this.mContacts = mContacts;
+        mDialog = new DeleteDialog(mActivity);
+        mDialog.setOnClickListViewContactListener(this);
+        mDialog.setOnDismissListener(this);
+
     }
 
+    @Override
+    public void onClickBtnOK(View v) {
+        mContacts.remove(mDialog.getPosition());
+        notifyDataSetChanged();
+        mDialog.dismiss();
+    }
+
+    @Override
+    public void onClickBtnCancel(View v) {
+        mDialog.dismiss();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+
+    }
+
+    @Override
+    public void onChange(Contact contactModelmodel) {
+        notifyDataSetChanged();
+    }
+
+
+    /**
+     * create ViewHolder class to control convert view
+     */
+    private static class ViewHolder {
+        ImageView imgAvatar, imgDelete, imgEdit;
+        TextView tvName;
+        TextView tvDesc;
+    }
+
+
+    /**
+     * @param position    position of ArrayList<ContactModel> mContacts
+     * @param convertView View of item in ListView
+     * @param viewGroup   View Parent of convertView
+     * @return convertView
+     */
+    @Override
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
+        ViewHolder holder = null;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_list_contact, viewGroup, false);
+            holder = new ViewHolder();
+            holder.tvName = (TextView) convertView.findViewById(R.id.tvNameContact);
+            holder.imgAvatar = (ImageView) convertView.findViewById(R.id.imgAvarta);
+            holder.imgEdit = (ImageView) convertView.findViewById(R.id.imgEdit);
+            holder.imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        setValue(holder, position);
+        setEvent(holder, position);
+
+        return convertView;
+    }
+
+
+    /**
+     * method intent to EditContactFragment
+     *
+     * @param contactModel is a object to refactor
+     */
+    private void callEditContactFragment(Contact contactModel) {
+        mFragmentManager = mActivity.getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        if (mEditContactFragment == null) {
+            mEditContactFragment = new EditContactFragment();
+            mEditContactFragment.setOnChangeItemListener(this);
+        }
+        Bundle dataBundle = new Bundle();
+        dataBundle.putSerializable("dataBundle", contactModel);
+
+        mEditContactFragment.setArguments(dataBundle);
+        mFragmentTransaction.replace(R.id.rlContainer, mEditContactFragment);
+        mFragmentTransaction.addToBackStack(null);
+        mFragmentTransaction.commit();
+    }
+
+    /**
+     * @return count of arrayList
+     */
     @Override
     public int getCount() {
-        return mLists.size();
+        return mContacts.size();
     }
 
+    /**
+     * @param position
+     * @return Object possition
+     */
     @Override
-    public Contact getItem(int position) {
-        return mLists.get(position);
+    public Object getItem(int position) {
+        return mContacts.get(position);
     }
 
+    /**
+     * Don't use
+     *
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
-    @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
-        final ViewHolder mViewHolder;
+    /**
+     * set value for view holder
+     *
+     * @param holder   is current convert view
+     * @param position is a current possition Listview
+     */
+    private void setValue(ViewHolder holder, int position) {
+        Contact model = (Contact) getItem(position);
+        holder.tvName.setText(model.getName());
+        holder.imgAvatar.setImageResource(model.getAvatar());
+    }
 
-        if (convertView == null) {
-            LayoutInflater inflate = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflate.inflate(R.layout.item_list_contact, null);
-            mViewHolder = new ViewHolder();
-
-            mViewHolder.mAvarta = (ImageView) convertView.findViewById(R.id.imgAvarta);
-            mViewHolder.mNameContact = (TextView) convertView.findViewById(R.id.tvNameContact);
-            mViewHolder.mImageDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
-            mViewHolder.mImageEdit = (ImageView) convertView.findViewById(R.id.imgEdit);
-
-            convertView.setTag(mViewHolder);
-        } else {
-
-            mViewHolder = (ViewHolder) convertView.getTag();
-        }
-        final Contact mContact = mLists.get(position);
-        mViewHolder.mNameContact.setText(mContact.getNameUser());
-        mViewHolder.mAvarta.setImageResource(mContact.getAvatar());
-
-        //Click Imagge Delete on item listview
-        mViewHolder.mImageDelete.setOnClickListener(new View.OnClickListener() {
+    private void setEvent(final ViewHolder holder, final int position) {
+        final Contact model = (Contact) getItem(position);
+        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(mContext, R.style.StyleDialog);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.setContentView(R.layout.dialog_delete_contact);
-
-
-                TextView mOkDialog = (TextView) dialog.findViewById(R.id.tvOkDialog);
-                TextView mCancelDialog = (TextView) dialog.findViewById(R.id.tvCancelDialog);
-                TextView mMessage = (TextView) dialog.findViewById(R.id.tvMessageDialog);
-
-                String mName = mViewHolder.mNameContact.getText().toString();
-                mMessage.setText(Html.fromHtml("Are you sure you want to delete " + "<b>" + mName + "</b>" + " ?"));
-                dialog.show();
-
-                //Click Cancel on dialog delete
-                mCancelDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                //Click Ok on dialog delete
-                mOkDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mLists.remove(position);
-                        notifyDataSetChanged();
-                        dialog.dismiss();
-                    }
-                });
+                mDialog.setPosition(position);
+                mDialog.show();
+                mDialog.setDialogMessage(model);
             }
         });
-
-        //Click Image Edit on item listview
-        mViewHolder.mImageEdit.setOnClickListener(new View.OnClickListener() {
-
+        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                //Send data from Activity to EditContactFragment
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("contact", mContact);
-                bundle.putInt("mposition", position);
-                EditContactFragment mEditContactFragment = new EditContactFragment();
-                mEditContactFragment.setArguments(bundle);
-
-                // TODO Auto-generated method stub
-                FragmentManager mFragmentManager = ((Activity) mContext).getFragmentManager();
-                FragmentTransaction FragmentTransaction = mFragmentManager.beginTransaction();
-                FragmentTransaction.replace(R.id.rlcontacts, mEditContactFragment);
-                FragmentTransaction.addToBackStack(null);
-                FragmentTransaction.commit();
+            public void onClick(View view) {
+                callEditContactFragment(model);
             }
         });
-        return convertView;
     }
 
 
-    static class ViewHolder {
-        TextView mNameContact;
-        ImageView mAvarta;
-        ImageView mImageDelete;
-        ImageView mImageEdit;
-    }
 }
-

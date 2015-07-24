@@ -1,59 +1,39 @@
 package intership.dev.contact.Model;
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
 
 /**
- * Created by thanhitbk on 21/07/2015.
+ * Created Constructor
+ * Generate method Set and Get for variable
  */
 public class Contact implements Serializable {
-    private int mAvatar;
-    private String mNameUser;
+    private String mName;
     private String mDescription;
-    //Determine btnDelete is selected or not
-    private boolean isDelete;
+    private int mAvatar;
 
-    public Contact(String mNameUser, String mDescription, int mAvatar) {
-        this.mNameUser = mNameUser;
-        this.mDescription = mDescription;
-        this.mAvatar = mAvatar;
-        isDelete = false;
+    public Contact() {
     }
 
-    public String getmDescription() {
+    public Contact(String mName, String mDescription, int mAvatar) {
+        this.mName = mName;
+        this.mDescription = mDescription;
+        this.mAvatar = mAvatar;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
-    }
-
-    private ImageView mImageEdit;
-    private ImageView mImageDelete;
-
-    public ImageView getmImageEdit() {
-        return mImageEdit;
-    }
-
-    public void setmImageEdit(ImageView mImageEdit) {
-        this.mImageEdit = mImageEdit;
-    }
-
-    public ImageView getmImageDelete() {
-        return mImageDelete;
-    }
-
-    public void setmImageDelete(ImageView mImageDelete) {
-        this.mImageDelete = mImageDelete;
-    }
-
-    public String getNameUser() {
-        return mNameUser;
-    }
-
-    public void setNameUser(String mNameUser) {
-        this.mNameUser = mNameUser;
     }
 
     public int getAvatar() {
@@ -62,13 +42,5 @@ public class Contact implements Serializable {
 
     public void setAvatar(int mAvatar) {
         this.mAvatar = mAvatar;
-    }
-
-    public void setIsDelete(boolean isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public boolean isDelete() {
-        return isDelete;
     }
 }
