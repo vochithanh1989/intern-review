@@ -6,7 +6,7 @@
     <RelativeLayout
         android:id="@+id/llHearder"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="@dimen/header.height"
         android:background="@color/backgroup.header.layout.main">
 
         <TextView
@@ -16,8 +16,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/header_layout_main"
-            android:textColor="#ffffff"
-            android:textSize="24dp" />
+            android:textColor="@color/textview.color.header"
+            android:textSize="@dimen/textview.text.contact_text_size" />
 
         <ImageView
             android:id="@+id/imgBack"

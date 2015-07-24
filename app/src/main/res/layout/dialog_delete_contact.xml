@@ -3,35 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="40dp"
+    android:layout_marginLeft="@dimen/dialog.marginleft"
+    android:layout_marginRight="@dimen/dialog.maginright"
     android:background="@drawable/bg_dialog_delete_contact"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="40dp"
-        android:paddingTop="40dp">
+        android:paddingBottom="@dimen/textview.paddingbottom.dialog"
+        android:paddingTop="@dimen/textview.paddingtop.dialog">
 
         <TextView
             android:id="@+id/tvMessageDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Bạn có muốn xoá?"
-            android:textColor="#000"
-            android:textSize="16dp" />
+            android:paddingLeft="@dimen/textview.message.padding_right_left.dialog"
+            android:paddingRight="@dimen/textview.message.padding_right_left.dialog"
+            android:textColor="@color/textview.color.text_edit"
+            android:textSize="@dimen/textsize.message.dialog" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="#3f000000"></View>
+        android:layout_height="@dimen/view.height"
+        android:background="@color/view.background"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/button.height.dialog"
         android:layout_weight="2"
         android:orientation="horizontal">
 
@@ -45,16 +46,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="OK"
+                android:text="@string/button.text.ok"
                 android:textAllCaps="false"
                 android:textColor="@color/button.backgroup.item.list" />
-
         </RelativeLayout>
 
         <View
-            android:layout_width="0.2dp"
+            android:layout_width="@dimen/view.height"
             android:layout_height="wrap_content"
-            android:background="#3f000000"></View>
+            android:background="@color/view.background"></View>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Cancel"
+                android:text="@string/button.text.cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/button.backgroup.item.list" />
         </RelativeLayout>
