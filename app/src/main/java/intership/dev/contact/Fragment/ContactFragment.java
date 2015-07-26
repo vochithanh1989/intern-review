@@ -35,7 +35,6 @@ public class ContactFragment extends Fragment implements LoadMoreListView.OnLoad
         lvContact.setAdapter(mContactAdapter);
         lvContact.setOnLoadMoreListener(this);
         return mListContact;
-
     }
 
     // Init fo first load listview

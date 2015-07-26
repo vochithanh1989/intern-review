@@ -82,7 +82,7 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
 
 
     /**
-     * @param position    position of ArrayList<ContactModel> mContacts
+     * @param position    position of ArrayList<Contact> mContacts
      * @param convertView View of item in ListView
      * @param viewGroup   View Parent of convertView
      * @return convertView
@@ -111,9 +111,9 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
     /**
      * method intent to EditContactFragment
      *
-     * @param contactModel is a object to refactor
+     * @param contact is a object to refactor
      */
-    private void callEditContactFragment(Contact contactModel) {
+    private void callEditContactFragment(Contact contact) {
         mFragmentManager = mFragmentActivity.getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         if (mEditContactFragment == null) {
@@ -121,7 +121,7 @@ public class ContactAdapter extends BaseAdapter implements DeleteDialog.OnClickC
             mEditContactFragment.setOnChangeItemListener(this);
         }
         Bundle dataBundle = new Bundle();
-        dataBundle.putSerializable("sendData", contactModel);
+        dataBundle.putSerializable("sendData", contact);
 
         mEditContactFragment.setArguments(dataBundle);
         mFragmentTransaction.replace(R.id.rlContainer, mEditContactFragment);

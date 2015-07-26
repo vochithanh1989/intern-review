@@ -10,7 +10,7 @@ import android.widget.TextView;
 import intership.dev.contact.R;
 
 /**
- * Created by hoai on 23/07/2015.
+ * Created by thanhitbk on 23/07/2015.
  */
 public class DeleteDialog extends Dialog implements View.OnClickListener {
     private TextView mMessage;
